@@ -4,20 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link type="text/css" rel="stylesheet" href="/css/jass.css">
     <link rel="stylesheet" href="/css/style.css">
-    
-    <title>TechBlog</title>
 </head>
-<body>
-  <div class = "flex-column justify-space-around">
-    <main class="container container-fluid mt-5">
-      {{{ body }}} 
 
+<body>
+   <div class="wrapper">
+      <header class="hero">
+          <div class="navBar">
+            <nav class="nav">
+                    <a class="link" href="/">Home</a>
+                    <a class="link" href="/dashboard">Dashboard</a>
+                    {{#if loggedIn}}
+                    <a class="link" href="/" id="logout">Logout</a>
+                    {{else}}
+                    <a class="link" href="/login">Login</a>
+                    {{/if}}
+                </nav>          
+            <h1 class="app-title"><i class="fab "></i><a class='link' href='/'>TechBlog</a></h1>
+          </div>
+      </header>
+
+      <main>
+       {{{ body }}}
+      </main>
+
+       <footer>
+        <div id="quote" class="center-align"></div>
+      </footer>
+  </div>
     <!-- all handlebars displayed inside of the body of main, including navigation, header ie if a user logs in then it displays a X, etc 
     when rendering another page you have to use the htmlRoute
     -->
-   </main>
-  </div>
 </body>
 </html>
+
+   
+   
