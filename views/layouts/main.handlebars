@@ -6,31 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link type="text/css" rel="stylesheet" href="/css/jass.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
    <div class="wrapper">
       <header class="hero">
-          <div class="navBar">
-            <nav class="nav">
-                    <a class="link" href="/">Home</a>
-                    <a class="link" href="/dashboard">Dashboard</a>
-                    {{#if loggedIn}}
-                    <a class="link" href="/" id="logout">Logout</a>
-                    {{else}}
-                    <a class="link" href="/login">Login</a>
-                    {{/if}}
-                </nav>          
-            <h1 class="app-title"><i class="fab "></i><a class='link' href='/'>TechBlog</a></h1>
+        <div class="container is-widescreen">
+          <div class="notification is-primary">
+            <div class="buttons">
+              <a class="button is-info" href="/">Home</a>
+              <a class="button is-info" href="/dashboard">Dashboard</a>
+                {{#if loggedIn}}
+              <a class="button is-info" href="/logout" id="logout">Logout</a>
+                {{else}}
+              <a class="button is-info" href="/login">Login</a>
+                {{/if}}
+              {{!-- <button class='""><h1 class="title"><i class="fab"></i><a class='link' href='/'>TechBlog</a></h1> --}}
+            </div>
           </div>
-      </header>
+        </div>       
+    </header>
 
       <main>
        {{{ body }}}
+
       </main>
 
        <footer>
+         This is a footer.
         <div id="quote" class="center-align"></div>
       </footer>
   </div>

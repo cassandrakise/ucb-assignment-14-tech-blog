@@ -16,6 +16,41 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/signup', async (req, res) => {
+    try {
+        const userData = await User.create({ 
+            name: req.body.name,
+            email: req.body.email, 
+            password: req.body.password
+        });
+
+        if (!userData) {
+            res
+                .status(400)
+                .json({ message: 'Invalid login information'});
+            return; 
+        }
+
+        // if (!validPassword) {
+        //     res 
+        //         .status(400)
+        //         .json({ message: 'Incorrect email or password, please try again' });
+        //     return;
+        // }
+
+        req.session.save(() => {
+            req.sessionStore.user_id = userData.id;
+            req.session.logged_in = true;
+
+            res.json({ user: userData, message: 'You are now registered!'});
+        });
+    
+    }  catch (err) {
+        res.status(400).json(err);
+    }    
+});
+
+
 router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({ where: { email: req.body.email } });
@@ -40,7 +75,7 @@ router.post('/login', async (req, res) => {
             req.sessionStore.user_id = userData.id;
             req.session.logged_in = true;
 
-            req.json({ user: userData, message: 'You are now logged in!'});
+            res.json({ user: userData, message: 'You are now logged in!'});
         });
     
     }  catch (err) {
