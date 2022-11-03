@@ -10,7 +10,8 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const sess = { // will need to check to see if this sess is applicable -- look at project 2 for comparison
+const sess = {
+    
     secret: "whatAseCRET",
     cookie: {},
     store: new SequelizeStore({

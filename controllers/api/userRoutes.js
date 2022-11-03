@@ -54,30 +54,36 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({ where: { email: req.body.email } });
-
-        if (!userData) {
+        // JSON.parse(JSON.stringify(userData)); -- test to avoid bug
+            if (!userData) {
             res
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again'});
             return; 
         }
 
-        const validPassword = await userData.checkPassword(req.body.password);
-
+        const validPassword = userData.checkPassword(req.body.password);
         if (!validPassword) {
+
             res 
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again' });
             return;
         }
 
+        // res.json({ test: 'what'});
+
         req.session.save(() => {
             req.sessionStore.user_id = userData.id;
             req.session.logged_in = true;
-
-            res.json({ user: userData, message: 'You are now logged in!'});
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ "user": userData, "message" : "Successfully logged in!" })); // had to use "old school way" to receive any sort of request/response, which was only visible in firefox and not in chrome
+            
+            // res.json({ "user" : userData });
+            // res.json({ "user" : "test" });
         });
-    
+
+        
     }  catch (err) {
         res.status(400).json(err);
     }    
