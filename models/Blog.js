@@ -16,9 +16,8 @@ Blog.init(
             alllowNull: false,
         },
         description: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
         },
         user_id: {
             type: DataTypes.INTEGER,
