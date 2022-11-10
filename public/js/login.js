@@ -17,6 +17,8 @@ async function loginFormHandler(event) {
         });
 
         if (response.ok) {
+            let userData = await response.json();
+            console.log(userData);
             document.location.replace('/');
         } else {
             alert(response.statusText);
