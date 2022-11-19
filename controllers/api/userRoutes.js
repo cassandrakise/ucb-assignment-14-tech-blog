@@ -73,16 +73,17 @@ router.post('/login', async (req, res) => {
 
         // res.json({ test: 'what'});
 
-        req.session.save(() => {
-            req.sessionStore.user_id = userData.id;
-            req.session.logged_in = true;
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ "user": userData, "message" : "Successfully logged in!" })); // had to use "old school way" to receive any sort of request/response, which was only visible in firefox and not in chrome
+        // req.session.save(() => {
+        //     // req.sessionStore.user_id = userData.id;
+        //     req.session.logged_in = true;
+        //     // res.setHeader('Content-Type', 'application/json');
+        //     // res.end(JSON.stringify({ "user": userData, "message" : "Successfully logged in!" })); // had to use "old school way" to receive any sort of request/response, which was only visible in firefox and not in chrome
             
-            // res.json({ "user" : userData });
-            // res.json({ "user" : "test" });
-        });
-
+        //     // res.json({ "user" : userData });
+        //     // res.json({ "user" : "test" });
+        //     res.json({ message: 'You are now logged in.'});
+        // });
+        res.status(200).json({ message: 'You are now logged in.'});
         
     }  catch (err) {
         res.status(400).json(err);
