@@ -49,38 +49,30 @@ router.post('/login', async (req, res) => {
         const userData = await User.findOne({ where: { email: req.body.email } });
         // JSON.parse(JSON.stringify(userData)); -- test to avoid bug
             if (!userData) {
-            res
+            return res
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again'});
-            return; 
         }
+        console.log(userData)
 
         const validPassword = userData.checkPassword(req.body.password);
         if (!validPassword) {
-
-            res 
+            return res 
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again' });
-            return;
         }
 
-        // res.json({ test: 'what'});
-
-        // req.session.save(() => {
-        //     // req.sessionStore.user_id = userData.id;
-        //     req.session.logged_in = true;
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ "user": userData, "message" : "Successfully logged in!" })); // had to use "old school way" to receive any sort of request/response, which was only visible in firefox and not in chrome
-            
-        //     // res.json({ "user" : userData });
-        //     // res.json({ "user" : "test" });
-        //     res.json({ message: 'You are now logged in.'});
-        // });
-        res.status(200).json({ message: 'You are now logged in.'});
-        
-    }  catch (err) {
-        res.status(400).json(err);
-    }    
+        req.session.save(() => {
+            req.session.userId = userData.id;
+            req.session.username = userData.username;
+            req.session.loggedIn = true;
+      
+            res.json({ userData, message: 'You are now logged in!' });
+          });
+        } catch (err) {
+        console.log(err)
+          res.status(400).json({ message: 'No user account found!' });
+        }
 });
 
 router.post('/logout', (req,res) => {
